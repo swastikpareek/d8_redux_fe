@@ -5,22 +5,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setLoadingState, setListData, toggleFormState } from '../../actions/list';
 import ConditionalView from '../../component/ConditionalView';
 import { Button } from 'react-bootstrap';
+import {Request, Globals} from '../../constants';
 
 function List() {
   const dispatch = useDispatch();
-  const listItems = useSelector(state =>{
-    return state.listItems;
-  });
-
-  const isLoading = useSelector(state =>{
-    return state.loading;
-  });
-
-  const showAddFormPopup = useSelector(state =>{
-    return state.showAddFormPopup;
-  });
-
-  const ItemURLs = `http://l.d8/list/todo?_format=json`;
+  const listItems = useSelector(state => state.listItems);
+  const isLoading = useSelector(state => state.loading);
+  const showAddFormPopup = useSelector(state => state.showAddFormPopup);
 
   const toggleForm = () => {
     dispatch(toggleFormState(!showAddFormPopup));
@@ -28,19 +19,15 @@ function List() {
 
   useEffect(() => {
     if(isLoading) {
-      fetch(ItemURLs)
-        .then(data => {
-          return data.json();
-        })
-        .then(data => {
-          dispatch(setListData(data));
-          dispatch(setLoadingState(false));
-        })
-        .catch(err => {
-          console.log('error');
-        });
+      Request(Globals.route.todoLists, {}, 'GET', (data) => {
+        dispatch(setListData(data));
+        dispatch(setLoadingState(false));
+      },
+      (error) => {
+        dispatch(setLoadingState(false));
+      });
     }
-  }, [ItemURLs, dispatch, isLoading]);
+  }, [dispatch, isLoading]);
 
   return (
     <div className="container pt-2 pb-2 mt-5 card">

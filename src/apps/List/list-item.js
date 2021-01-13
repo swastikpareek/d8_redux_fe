@@ -8,7 +8,6 @@ function ListItem({name, description, done, index, isLast, nid}) {
 
   const updateCheckboxState = (event) => {
     const value = event.currentTarget.checked ? "1" : "0";
-    const url = 'node/' + nid;
     const data = {
       _links: {
         type: {
@@ -21,15 +20,13 @@ function ListItem({name, description, done, index, isLast, nid}) {
     };
 
     setIsLoading(true);
-    Request(url, data, 'PATCH', (data) => {
+    Request(`${Globals.route.node}/${nid}` , data, 'PATCH', (data) => {
       setIsLoading(false);
       setChecked(data.field_completed.pop().value ? "1" : "0");
       alertify.success('Item updated');
     },
     (error) => {
-      console.log('error', error);
       setIsLoading(false);
-      alertify.error('Item not updated');
     });
   }
 

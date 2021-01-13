@@ -6,22 +6,10 @@ import { useDispatch } from 'react-redux';
 import * as alertify from 'alertifyjs';
 
 function ListForm({show, closeHandler}) {
+  const dispatch = useDispatch();
   const [todoData, setTodoData] = useState(TodoDataConfig);
   const [isLoading, setIsLoading] = useState(false);
-  const dispatch = useDispatch();
-
-  const handleInputChange = (event) => {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
-
-    setTodoData({
-      ...todoData,
-      [name]: value
-    });
-  }
-
-  const formatData = () => ({
+  const data = {
     _links: {
       type: {
         href: `${Globals.baseUrl}/rest/type/node/todo`
@@ -36,11 +24,22 @@ function ListForm({show, closeHandler}) {
     field_completed: [{
       value: todoData.done
     }]
-  });
+  };
+
+  const onInputChange = (event) => {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    setTodoData({
+      ...todoData,
+      [name]: value
+    });
+  }
 
   const addData = (event) => {
     setIsLoading(true);
-    Request('node', formatData(), 'POST', (data) => {
+    Request(Globals.route.node, data, 'POST', (data) => {
       setIsLoading(false);
       dispatch(addToListData({
         ...todoData,
@@ -53,9 +52,7 @@ function ListForm({show, closeHandler}) {
       setTodoData(TodoDataConfig);
     },
     (error) => {
-      console.log('error', error);
       setIsLoading(false);
-      alertify.error('Error has occurred');
     });
   }
 
@@ -76,7 +73,7 @@ function ListForm({show, closeHandler}) {
             placeholder="Enter Title"
             value={todoData.name}
             name="name"
-            onChange={handleInputChange}
+            onChange={onInputChange}
           />
           <small id="titleHelp" className="form-text text-muted">Add a todo task title.</small>
         </div>
@@ -89,7 +86,7 @@ function ListForm({show, closeHandler}) {
             placeholder="Enter Description"
             name="description"
             value={todoData.description}
-            onChange={handleInputChange}
+            onChange={onInputChange}
           />
           <small id="descriptionHelp" className="form-text text-muted">A short help description to add more info to the todo.</small>
         </div>
@@ -102,7 +99,7 @@ function ListForm({show, closeHandler}) {
               aria-describedby="checkedHelp"
               name="done"
               checked={todoData.done}
-              onChange={handleInputChange}
+              onChange={onInputChange}
               />
             <label className="custom-control-label" htmlFor="checkedFormElement">Is Completed</label>
           </div>
