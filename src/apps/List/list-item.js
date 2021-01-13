@@ -11,7 +11,7 @@ function ListItem({name, description, done, index, isLast, nid}) {
     const data = {
       _links: {
         type: {
-          href: `${Globals.baseUrl}/rest/type/node/article`
+          href: `${Globals.baseUrl}/rest/type/node/todo`
         }
       },
       field_completed: {
