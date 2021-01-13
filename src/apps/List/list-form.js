@@ -10,11 +10,9 @@ function ListForm({show, closeHandler}) {
   const [todoData, setTodoData] = useState(TodoDataConfig);
   const [isLoading, setIsLoading] = useState(false);
   const data = {
-    _links: {
-      type: {
-        href: `${Globals.baseUrl}/rest/type/node/todo`
-      }
-    },
+    type:[{
+       target_id: "todo"
+    }],
     title: [{
       value: todoData.name
     }],

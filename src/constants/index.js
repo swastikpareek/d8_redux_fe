@@ -40,10 +40,10 @@ const FormatBasicAuth = () => {
 export const Request = (url, data, method, successCallback, errorCallback) => {
   GetCsrfToken((csrfToken) => {
     $.ajax({
-      url: `${Globals.baseUrl}/${url}?_format=hal_json`,
+      url: `${Globals.baseUrl}/${url}?_format=json`,
       method,
       headers: {
-        'Content-Type': 'application/hal+json',
+        'Content-Type': 'application/json',
         'X-CSRF-Token': csrfToken,
         'Authorization': FormatBasicAuth()
       },

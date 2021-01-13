@@ -9,11 +9,9 @@ function ListItem({name, description, done, index, isLast, nid}) {
   const updateCheckboxState = (event) => {
     const value = event.currentTarget.checked ? "1" : "0";
     const data = {
-      _links: {
-        type: {
-          href: `${Globals.baseUrl}/rest/type/node/todo`
-        }
-      },
+      type:[{
+         target_id: "todo"
+      }],
       field_completed: {
         value
       }
