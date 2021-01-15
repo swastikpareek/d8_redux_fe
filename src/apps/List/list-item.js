@@ -18,7 +18,7 @@ function ListItem({name, description, done, index, isLast, nid}) {
     };
 
     setIsLoading(true);
-    Request(`${Globals.route.node}/${nid}` , data, 'PATCH', (data) => {
+    Request(`${Globals.route.node}/${nid}`, data, {}, 'PATCH', (data) => {
       setIsLoading(false);
       setChecked(data.field_completed.pop().value ? "1" : "0");
       alertify.success('Item updated');

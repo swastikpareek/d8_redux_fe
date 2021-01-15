@@ -37,7 +37,7 @@ function ListForm({show, closeHandler}) {
 
   const addData = (event) => {
     setIsLoading(true);
-    Request(Globals.route.node, data, 'POST', (data) => {
+    Request(Globals.route.node, data, {}, 'POST', (data) => {
       setIsLoading(false);
       dispatch(addToListData({
         ...todoData,

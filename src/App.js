@@ -3,6 +3,7 @@ import {Provider} from 'react-redux';
 import {createStore} from 'redux';
 import List from './apps/List';
 import LoginForm from './apps/login-form';
+import LogoutButton from './apps/logout-button';
 import listReducer from './reducers/list';
 import { Request, Globals } from './constants';
 import ConditionalView from './component/ConditionalView';
@@ -13,14 +14,14 @@ const ListStore = createStore(listReducer);
 
 export default function App() {
   const [loginStatus, setLoginStatus] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const userStatusCallback = (data) => {
-    setLoginStatus(true);
+    setLoginStatus(data);
   }
 
   useEffect(() => {
     setIsLoading(true);
-    Request(Globals.route.login_status, {}, 'GET', (data) => {
+    Request(Globals.route.login_status, {}, {}, 'GET', (data) => {
       setIsLoading(false);
       setLoginStatus(data === '1' ? true : false);
     }, (error) => {
@@ -46,6 +47,7 @@ export default function App() {
             <LoginForm loginCallback={userStatusCallback} />
           </ConditionalView>
           <ConditionalView condition={loginStatus}>
+            <LogoutButton logoutCallback={userStatusCallback} />
             <List />
           </ConditionalView>
         </ConditionalView>

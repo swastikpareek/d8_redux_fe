@@ -10,6 +10,7 @@ export const Globals = {
      todoLists: 'list/todo',
      node: 'node',
      login: 'user/login',
+     logout: 'user/logout',
      login_status: 'user/login_status'
    }
 }
@@ -36,10 +37,14 @@ const GetCsrfToken = (callback) => {
 }
 
 
-export const Request = (url, data, method, successCallback, errorCallback) => {
+export const Request = (url, data, query, method, successCallback, errorCallback) => {
+  // debugger;
+  query['_format'] = 'json';
+  const params = Object.keys(query).map((param) => (param + '=' + query[param])).join('&');
+
   GetCsrfToken((csrfToken) => {
     $.ajax({
-      url: `${Globals.baseUrl}/${url}?_format=json`,
+      url: `${Globals.baseUrl}/${url}?${params}`,
       method,
       headers: {
         'Content-Type': 'application/json',

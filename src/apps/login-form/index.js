@@ -9,11 +9,11 @@ function LoginForm({loginCallback}) {
 
   const login = () => {
     setIsLoading(true);
-    Request(Globals.route.login, userData, 'POST', (data) => {
+    Request(Globals.route.login, userData, {}, 'POST', (data) => {
       setIsLoading(false);
       alertify.success('Logged in');
       localStorage.setItem('xcsrf-token', data.csrf_token);
-      localStorage.setItem('logout-token', data.csrf_token);
+      localStorage.setItem('logout-token', data.logout_token);
       loginCallback(true);
     },
     (error) => {

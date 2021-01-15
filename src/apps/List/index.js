@@ -19,7 +19,7 @@ function List() {
 
   useEffect(() => {
     if(isLoading) {
-      Request(Globals.route.todoLists, {}, 'GET', (data) => {
+      Request(Globals.route.todoLists, {}, {}, 'GET', (data) => {
         dispatch(setListData(data));
         dispatch(setLoadingState(false));
       },
@@ -52,7 +52,7 @@ function List() {
             </div>
           </ConditionalView>
         </ConditionalView>
-        <Button variant="primary" onClick={toggleForm}>
+        <Button variant="primary" onClick={toggleForm} className="w-100">
           Add a Todo
         </Button>
         <ListForm show={showAddFormPopup} closeHandler={toggleForm} />
