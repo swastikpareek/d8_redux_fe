@@ -30,31 +30,33 @@ function List() {
   }, [dispatch, isLoading]);
 
   return (
-    <div className="container pt-2 pb-2 mt-5 card">
-      <h1> List Items</h1>
-      <ConditionalView condition={isLoading}>
-        <div className="d-flex align-items-center py-4 flex-column">
-          <div className="spinner-border mb-5" role="status">
-            <span className="sr-only">Loading...</span>
-          </div>
-          <p> Please wait </p>
-        </div>
-      </ConditionalView>
-      <ConditionalView condition={!isLoading}>
-        <ConditionalView condition={listItems.length > 0}>
-          {listItems.map((i, ind) => <ListItem key={ind} index={ind} isLast={ind === listItems.length - 1} {...i} />)}
-        </ConditionalView>
-        <ConditionalView condition={listItems.length === 0}>
+    <div className="mt-5 card">
+      <div className="card-body">
+        <h3 className="card-title">List Items</h3>
+        <ConditionalView condition={isLoading}>
           <div className="d-flex align-items-center py-4 flex-column">
-            <h4> No todo for you </h4>
-            <p> Add a todo from the 'Add Todo' button </p>
+            <div className="spinner-border mb-5" role="status">
+              <span className="sr-only">Loading...</span>
+            </div>
+            <p> Please wait </p>
           </div>
         </ConditionalView>
-      </ConditionalView>
-      <Button variant="primary" onClick={toggleForm}>
-        Add a Todo
-      </Button>
-      <ListForm show={showAddFormPopup} closeHandler={toggleForm} />
+        <ConditionalView condition={!isLoading}>
+          <ConditionalView condition={listItems.length > 0}>
+            {listItems.map((i, ind) => <ListItem key={ind} index={ind} isLast={ind === listItems.length - 1} {...i} />)}
+          </ConditionalView>
+          <ConditionalView condition={listItems.length === 0}>
+            <div className="d-flex align-items-center py-4 flex-column">
+              <h4> No todo for you </h4>
+              <p> Add a todo from the 'Add Todo' button </p>
+            </div>
+          </ConditionalView>
+        </ConditionalView>
+        <Button variant="primary" onClick={toggleForm}>
+          Add a Todo
+        </Button>
+        <ListForm show={showAddFormPopup} closeHandler={toggleForm} />
+      </div>
     </div>
   );
 }

@@ -8,7 +8,9 @@ export const Globals = {
    password: 'admin',
    route: {
      todoLists: 'list/todo',
-     node: 'node'
+     node: 'node',
+     login: 'user/login',
+     login_status: 'user/login_status'
    }
 }
 
@@ -20,6 +22,9 @@ export const TodoDataConfig = {
 
 
 const GetCsrfToken = (callback) => {
+  if(localStorage.getItem('xcsrf-token')) {
+    callback(localStorage.getItem('xcsrf-token'));
+  } else {
   $
     .get(`${Globals.baseUrl}/session/token`)
     .done(function (data) {
@@ -27,13 +32,7 @@ const GetCsrfToken = (callback) => {
 
       callback(csrfToken);
     });
-}
-
-const FormatBasicAuth = () => {
-  const basicAuthCredential = Globals.username + ":" + Globals.password;
-  const base64 =  btoa(basicAuthCredential);
-
-  return 'Basic ' + base64;
+  }
 }
 
 
@@ -44,15 +43,20 @@ export const Request = (url, data, method, successCallback, errorCallback) => {
       method,
       headers: {
         'Content-Type': 'application/json',
-        'X-CSRF-Token': csrfToken,
-        'Authorization': FormatBasicAuth()
+        'X-CSRF-Token': csrfToken
       },
+      credentials: 'same-origin',
+      xhrFields: {
+        'withCredentials': true
+     },
       data: method === 'GET' ? null: JSON.stringify(data),
       success: (data) => {
         successCallback(data);
       },
       error: (error) => {
-        alertify.error('ERROR: ' + error.responseJSON.message);
+        if(error.responseJSON) {
+          alertify.error('ERROR: ' + error.responseJSON.message);
+        }
         console.log('error', error);
         errorCallback(error);
       }
