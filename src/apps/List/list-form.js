@@ -7,6 +7,7 @@ import * as alertify from 'alertifyjs';
 
 function ListForm({show, closeHandler}) {
   const dispatch = useDispatch();
+  // Local state declaration
   const [todoData, setTodoData] = useState(TodoDataConfig);
   const [isLoading, setIsLoading] = useState(false);
   const data = {

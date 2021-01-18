@@ -8,8 +8,10 @@ import { updateUserConfig, setListData, setLoadingState } from '../../actions/li
 
 const LogoutButton = ({logoutCallback}) => {
   const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(false);
   const userInfo = useSelector(state => state.user);
+  // Local state declaration
+  const [isLoading, setIsLoading] = useState(false);
+
   const logout = () => {
     const token = localStorage.getItem('logout-token');
 
@@ -23,7 +25,6 @@ const LogoutButton = ({logoutCallback}) => {
       logoutCallback(false);
       dispatch(updateUserConfig({}));
       dispatch(setListData([]));
-      dispatch(setLoadingState(false));
     },
     (error) => {
       setIsLoading(false);

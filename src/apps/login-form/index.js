@@ -4,6 +4,7 @@ import { Request, Globals } from '../../constants';
 import * as alertify from 'alertifyjs';
 
 function LoginForm({loginCallback}) {
+  // Local state declaration
   const [isLoading, setIsLoading] = useState(false);
   const [userData, setUserData] = useState({name: '', pass: ''})
 

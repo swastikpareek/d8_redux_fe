@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ListItem from './list-item.js';
 import ListForm from './list-form.js';
 import { useSelector, useDispatch } from 'react-redux';
@@ -10,22 +10,25 @@ import {Request, Globals} from '../../constants';
 function List() {
   const dispatch = useDispatch();
   const listItems = useSelector(state => state.listItems);
-  const isLoading = useSelector(state => state.loading);
   const userInfo = useSelector(state => state.user);
   const showAddFormPopup = useSelector(state => state.showAddFormPopup);
+
+  // Local state declaration
+  const [isLoading, setIsLoading] = useState(true);
 
   const toggleForm = () => {
     dispatch(toggleFormState(!showAddFormPopup));
   }
 
   useEffect(() => {
+    setIsLoading(true);
     if(Array.isArray(userInfo.uid)) {
       Request(`${Globals.route.todoLists}/${userInfo.uid[0].value}`, {}, {}, 'GET', (data) => {
         dispatch(setListData(data));
-        dispatch(setLoadingState(false));
+        setIsLoading(false);
       },
       (error) => {
-        dispatch(setLoadingState(false));
+        setIsLoading(false);
       });
     }
   }, [dispatch, userInfo]);

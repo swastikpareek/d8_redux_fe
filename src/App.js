@@ -13,6 +13,7 @@ import * as alertify from 'alertifyjs';
 const ListStore = createStore(listReducer);
 
 export default function App() {
+  // Local state declaration
   const [loginStatus, setLoginStatus] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const userStatusCallback = (data) => {

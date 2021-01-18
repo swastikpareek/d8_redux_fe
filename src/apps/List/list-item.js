@@ -3,6 +3,7 @@ import {Request, Globals} from '../../constants';
 import * as alertify from 'alertifyjs';
 
 function ListItem({name, description, done, index, isLast, nid}) {
+  // Local state declaration
   const [checked, setChecked] = useState(done);
   const [isLoading, setIsLoading] = useState(false);
 
