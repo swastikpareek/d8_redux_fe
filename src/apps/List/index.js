@@ -11,6 +11,7 @@ function List() {
   const dispatch = useDispatch();
   const listItems = useSelector(state => state.listItems);
   const isLoading = useSelector(state => state.loading);
+  const userInfo = useSelector(state => state.user);
   const showAddFormPopup = useSelector(state => state.showAddFormPopup);
 
   const toggleForm = () => {
@@ -18,8 +19,8 @@ function List() {
   }
 
   useEffect(() => {
-    if(isLoading) {
-      Request(Globals.route.todoLists, {}, {}, 'GET', (data) => {
+    if(Array.isArray(userInfo.uid)) {
+      Request(`${Globals.route.todoLists}/${userInfo.uid[0].value}`, {}, {}, 'GET', (data) => {
         dispatch(setListData(data));
         dispatch(setLoadingState(false));
       },
@@ -27,7 +28,7 @@ function List() {
         dispatch(setLoadingState(false));
       });
     }
-  }, [dispatch, isLoading]);
+  }, [dispatch, userInfo]);
 
   return (
     <div className="mt-5 card">

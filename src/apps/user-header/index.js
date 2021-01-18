@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import { Request, Globals } from '../../constants';
 import { useSelector, useDispatch } from 'react-redux';
 import * as alertify from 'alertifyjs';
-import { updateUserConfig } from '../../actions/list';
+import { updateUserConfig, setListData, setLoadingState } from '../../actions/list';
 
 
 const LogoutButton = ({logoutCallback}) => {
@@ -22,6 +22,8 @@ const LogoutButton = ({logoutCallback}) => {
       localStorage.removeItem('user_id');
       logoutCallback(false);
       dispatch(updateUserConfig({}));
+      dispatch(setListData([]));
+      dispatch(setLoadingState(false));
     },
     (error) => {
       setIsLoading(false);
