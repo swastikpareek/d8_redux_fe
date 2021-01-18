@@ -14,6 +14,7 @@ function LoginForm({loginCallback}) {
       alertify.success('Logged in');
       localStorage.setItem('xcsrf-token', data.csrf_token);
       localStorage.setItem('logout-token', data.logout_token);
+      localStorage.setItem('user_id', data.current_user.uid);
       loginCallback(true);
     },
     (error) => {

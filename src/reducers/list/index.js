@@ -1,5 +1,6 @@
 
 const initialState = {
+  "user": {},
   "loading": true,
   "listItems": [],
   "showAddFormPopup": false
@@ -27,6 +28,12 @@ const ListReducer = (state=initialState, action) => {
         ...state,
         listItems: state.listItems.concat(action.val)
       }
+    case 'ADD_USER':
+      return{
+        ...state,
+        user: action.user
+      }
+
      default:
        return state;
   }

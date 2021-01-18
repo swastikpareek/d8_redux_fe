@@ -3,7 +3,7 @@ import {Provider} from 'react-redux';
 import {createStore} from 'redux';
 import List from './apps/List';
 import LoginForm from './apps/login-form';
-import LogoutButton from './apps/logout-button';
+import UserHeader from './apps/user-header';
 import listReducer from './reducers/list';
 import { Request, Globals } from './constants';
 import ConditionalView from './component/ConditionalView';
@@ -47,7 +47,7 @@ export default function App() {
             <LoginForm loginCallback={userStatusCallback} />
           </ConditionalView>
           <ConditionalView condition={loginStatus}>
-            <LogoutButton logoutCallback={userStatusCallback} />
+            <UserHeader logoutCallback={userStatusCallback} />
             <List />
           </ConditionalView>
         </ConditionalView>

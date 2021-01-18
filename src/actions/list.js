@@ -25,3 +25,10 @@ export const addToListData = (val) => {
      val
   }
 }
+
+export const updateUserConfig = (user) => {
+  return {
+    type: 'ADD_USER',
+    user
+  }
+}
